@@ -1,0 +1,53 @@
+// This code is for v4 of the openai package: npmjs.com/package/openai
+import OpenAI from "openai";
+
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+});
+
+const response = await openai.chat.completions.create({
+  model: "gpt-3.5-turbo",
+  messages: [
+    {
+      "role": "system",
+      "content": "you will provide with this object\n{\nfrom_country: country,\nto_country: country,\ninput_text:  text\n}\n\nand your work is to translate the input_text from the local \" from_country \" to the local of the to_country and return object like this\n{\noutput_text: text\n}"
+    },
+    {
+      "role": "user",
+      "content": "{\nfrom_country:\"Morocco\",\nto_country:\"Yemen\",\ninput_text:\"ahlan labas 3lik akhoya\"\n}"
+    },
+    {
+      "role": "assistant",
+      "content": "{\noutput_text: \"هلا وسهلا عليك أخي\"\n}"
+    },
+    {
+      "role": "user",
+      "content": "{\nfrom_country:\"United States\",\nto_country:\"Morocco\",\ninput_text:\"hello how are you?\"\n}"
+    },
+    {
+      "role": "assistant",
+      "content": "{\noutput_text: \"salam , labas 3lik?\"\n}"
+    },
+    {
+      "role": "user",
+      "content": "{\nfrom_country:\"United States\",\nto_country:\"Morocco\",\ninput_text:\"hi  , i'm so sick today , i cant talk to you sorry\"\n}"
+    },
+    {
+      "role": "assistant",
+      "content": "{\noutput_text: \"salam , ana mrid  lyouma , man9drch ndwi m3ak , dsl\"\n}"
+    },
+    {
+      "role": "user",
+      "content": "{\nfrom_country:\"United States\",\nto_country:\"Morocco\",\ninput_text:\"i love you so much , can we talk\"\n}"
+    },
+    {
+      "role": "assistant",
+      "content": "{\noutput_text: \"kanbghiik bzzaf , wach momkin nhadro?\"\n}"
+    }
+  ],
+  temperature: 1,
+  max_tokens: 256,
+  top_p: 1,
+  frequency_penalty: 0,
+  presence_penalty: 0,
+});

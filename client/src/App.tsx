@@ -4,6 +4,7 @@ import markerIcon from './assets/marker.png';
 import userMarkerIcon from './assets/userMarker.png';
 import axios from "axios"
 import { useStore } from './store/core';
+import Controlers from './components/Global/Controlers';
 
 const containerStyle = {
   width: '100%',
@@ -38,11 +39,6 @@ const customMapStyle = [
     elementType: 'all',
     stylers: [{ color: '#282A3C' }] // Set the color to blue
   },
-  {
-    featureType: 'label',
-    elementType: 'labels.text.fill',
-    stylers: [{ color: '#000000' }] // Set the label text color to black
-  }
 ];
 
 function MyComponent() {
@@ -121,6 +117,7 @@ function MyComponent() {
 
 
   return isLoaded ? (
+    <>
     <GoogleMap
       mapContainerStyle={containerStyle}
       center={center}
@@ -130,7 +127,7 @@ function MyComponent() {
       options={{
         disableDefaultUI: true,
         minZoom: 3,
-        maxZoom: 4,
+        maxZoom: 3.5,
         styles: customMapStyle,
         restriction: {
           latLngBounds: maxBounds,
@@ -138,24 +135,39 @@ function MyComponent() {
         }
       }}
     >
-      {markerPositions.map((position, index) => (
+
         <Marker
-          key={index}
-          position={position}
+          position={markerPositions[0]}
           draggable={true}
-          onDragEnd={(e) => handleMarkerDrag(index, (e.latLng as any).toJSON())}
+          onDragEnd={(e) => handleMarkerDrag(0, (e.latLng as any).toJSON())}
           icon={{
-            url: index === 0 ? markerIcon : userMarkerIcon,
+            url:userMarkerIcon ,
             scaledSize: new window.google.maps.Size(40, 40)
           }}
-          // Display marker country information
-          title={`Country: ${markerCountries[index]}`}
         />
-      ))}
+        <Marker
+          position={markerPositions[1]}
+          draggable={true}
+          onDragEnd={(e) => handleMarkerDrag(1, (e.latLng as any).toJSON())}
+          icon={{
+            url:markerIcon,
+            scaledSize: new window.google.maps.Size(40, 40)
+          }}
+        />
     </GoogleMap>
+    </>
   ) : (
     <></>
   );
 }
 
-export default React.memo(MyComponent);
+const App = ()=>{
+  return(
+    <div>
+    <MyComponent/>
+    <Controlers/>
+    </div>
+  )
+}
+
+export default App;
