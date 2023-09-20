@@ -3,6 +3,7 @@ import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api';
 import markerIcon from './assets/marker.png';
 import userMarkerIcon from './assets/userMarker.png';
 import axios from "axios"
+import { useStore } from './store/core';
 
 const containerStyle = {
   width: '100%',
@@ -45,6 +46,10 @@ const customMapStyle = [
 ];
 
 function MyComponent() {
+
+  const { userCountry, toCountry, setUserCountry, setToCountry } = useStore()
+
+
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: 'AIzaSyD5BVORixh1-sFZ6oZkX-xh9mIu6egZy_0' // Replace with your API key
@@ -73,9 +78,13 @@ function MyComponent() {
   }, []);
 
   useEffect(()=>{
-
-      console.log(markerCountries)
+    setUserCountry(markerCountries[0])
+    setToCountry(markerCountries[1])
   },[markerCountries])
+
+  useEffect(()=>{
+    console.log({userCountry,toCountry})
+  },[userCountry,toCountry])
 
   const handleMarkerDrag = async (
     index: number,
@@ -94,7 +103,7 @@ function MyComponent() {
 
       if (response.data.results.length > 0) {
         const addressComponents = response.data.results[1].address_components;
-        const countryComponent = addressComponents.find((component) =>
+        const countryComponent = addressComponents.find((component:any) =>
           component.types.includes('country')
         );
 
