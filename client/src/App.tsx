@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api';
 import markerIcon from './assets/marker.png';
 import userMarkerIcon from './assets/userMarker.png';
@@ -72,6 +72,11 @@ function MyComponent() {
     setMap(null);
   }, []);
 
+  useEffect(()=>{
+
+      console.log(markerCountries)
+  },[markerCountries])
+
   const handleMarkerDrag = async (
     index: number,
     position: google.maps.LatLngLiteral
@@ -84,11 +89,11 @@ function MyComponent() {
       const response = await axios.get(
         `https://maps.googleapis.com/maps/api/geocode/json?latlng=${position.lat},${position.lng}&key=AIzaSyD5BVORixh1-sFZ6oZkX-xh9mIu6egZy_0`
       );
-      console.log(markerCountries)
+      console.log(response.data)
       console.log(position)
 
       if (response.data.results.length > 0) {
-        const addressComponents = response.data.results[0].address_components;
+        const addressComponents = response.data.results[1].address_components;
         const countryComponent = addressComponents.find((component) =>
           component.types.includes('country')
         );
