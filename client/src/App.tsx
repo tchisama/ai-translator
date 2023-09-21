@@ -37,7 +37,7 @@ const customMapStyle = [
   {
     featureType: 'water',
     elementType: 'all',
-    stylers: [{ color: '#282A3C' }] // Set the color to blue
+    stylers: [{ color: '#37394f' }] // Set the color to blue
   },
 ];
 
@@ -59,8 +59,8 @@ function MyComponent() {
 
   // Define state for marker countries
   const [markerCountries, setMarkerCountries] = useState([
-    'Country 1',
-    'Country 2'
+    '',
+    ''
   ]);
 
   const onLoad = React.useCallback(function callback(map: google.maps.Map) {
@@ -126,8 +126,8 @@ function MyComponent() {
       onUnmount={onUnmount}
       options={{
         disableDefaultUI: true,
-        minZoom: 3,
-        maxZoom: 3.5,
+        minZoom: 2.9,
+        maxZoom: 2.9,
         styles: customMapStyle,
         restriction: {
           latLngBounds: maxBounds,

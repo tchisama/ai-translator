@@ -5,6 +5,11 @@ interface StoreState {
   toCountry: string;
   setUserCountry: (newUserCountry: string) => void;
   setToCountry: (newToCountry: string) => void;
+
+  userCountryText: string;
+  toCountryText: string;
+  setUserCountryText: (newUserCountry: string) => void;
+  setToCountryText: (newToCountry: string) => void;
 }
 
 export const useStore = create<StoreState>((set) => ({
@@ -15,5 +20,14 @@ export const useStore = create<StoreState>((set) => ({
   },
   setToCountry: (newToCountry: string) => {
     set({ toCountry: newToCountry });
+  },
+
+  userCountryText: '',
+  toCountryText: '',
+  setUserCountryText: (newUserCountry: string) => {
+    set({ userCountryText: newUserCountry });
+  },
+  setToCountryText: (newToCountry: string) => {
+    set({ toCountryText: newToCountry });
   },
 }));
